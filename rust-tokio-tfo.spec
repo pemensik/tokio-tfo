@@ -5,15 +5,13 @@
 %global crate tokio-tfo
 
 Name:           rust-tokio-tfo
-Version:        0.2.2
+Version:        0.3.1
 Release:        %autorelease
 Summary:        TCP Fast Open (TFO) in Rust for tokio
 
 License:        MIT
 URL:            https://crates.io/crates/tokio-tfo
 Source:         %{crates_source}
-# https://github.com/zonyitoo/tokio-tfo/issues/8
-Source1:        https://github.com/zonyitoo/tokio-tfo/raw/ee26d7c8a5de16324f43c596d3c82a05dfd5b76f/LICENSE
 # Automatically generated patch to strip dependencies and normalize metadata
 Patch:          tokio-tfo-fix-metadata-auto.diff
 
@@ -34,7 +32,7 @@ This package contains library source intended for building other packages which
 use the "%{crate}" crate.
 
 %files          devel
-# FIXME: no license files detected
+%license %{crate_instdir}/LICENSE
 %doc %{crate_instdir}/README.md
 %{crate_instdir}/
 
@@ -49,7 +47,6 @@ use the "default" feature of the "%{crate}" crate.
 
 %files       -n %{name}+default-devel
 %ghost %{crate_instdir}/Cargo.toml
-%license LICENSE
 
 %prep
 %autosetup -n %{crate}-%{version} -p1
@@ -63,7 +60,6 @@ use the "default" feature of the "%{crate}" crate.
 
 %install
 %cargo_install
-install -m 0644 %{SOURCE1} .
 
 %if %{with check}
 %check
